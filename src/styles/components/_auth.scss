@@ -1,0 +1,148 @@
+.auth {
+    width: 100vw;
+    height: 100vh;
+    background-color: $very-dark-grayish-blue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth__login-container{
+    width: 280px;
+    height: 350px;
+    border-radius: 1rem;
+    background-color: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 10px 9px 0 $very-dark-blue;
+}
+
+.login__content{
+    width: 90%;
+    height: 100%;
+}
+
+.login__title{
+    margin-top: 2rem;
+    font-size: 3rem;
+    font-weight: bold;
+    text-align: center;
+    color: $very-dark-blue;
+
+}
+
+.auth__input{
+      width: 100%;
+      padding: 1.2rem 1rem;
+      margin: 0 auto;
+      border-radius: 0.8rem;
+      border: none;
+      outline: none;
+      margin-top: 1rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+}
+
+.btn-primary{
+    width: 100%;
+    height: 40px;
+    background-color: $very-dark-blue;
+    border: none;
+    outline: none;
+    border-radius: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: white;
+    font-weight: bold; 
+    transition: ease-in-out .3s;
+    cursor: pointer;
+
+    &:hover {
+        background-color: lighten($color: $very-dark-blue, $amount: 10);
+    }
+}
+
+.btn-link{
+    text-decoration: none;
+    font-size: 1.5rem;
+    padding-bottom: 2.2rem;  
+    color: $very-dark-blue; 
+    cursor: pointer;
+
+    &:hover{
+        color: lighten($color: $very-dark-blue, $amount: 10);
+    }
+}
+
+.login__social{
+    width: 100%;
+    margin-top: 1.7rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    h2{
+        font-size: 2rem;
+        color: $very-dark-blue;
+    }
+}
+
+.icons__social{
+    font-size: 3rem;
+    width: 50%;
+    margin: 0 auto;
+    display: flex;
+    color: white;
+    justify-content: space-evenly;
+    margin-top: 0.5rem;
+}
+
+.icon__google {
+    color: $very-dark-blue;
+    transition: ease-in-out .3s;
+    background-color: transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    
+
+    &:hover {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        
+    }
+}
+
+.icon__facebook {
+    color: $very-dark-blue;
+    transition: ease-in-out .3s;
+    background-color:  transparent;;
+    border-radius: 50%;
+    cursor: pointer;
+    
+    &:hover {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        
+        
+    }
+}
+
+.icon__twitter {
+    color: $very-dark-blue;
+    transition: ease-in-out .3s;
+    background-color:  transparent;;
+    padding: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    
+
+    &:hover {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+    }
+}
