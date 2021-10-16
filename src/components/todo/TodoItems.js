@@ -1,30 +1,35 @@
 import React from 'react'
-import useWindowDimensions from '../../hooks/useWindowDimensions'
-import { TodoInfo } from './TodoInfo'
-import { TodoItem } from './TodoItem'
+import { useSelector, useDispatch } from 'react-redux';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
+import { TodoInfo } from './TodoInfo';
+import { TodoItem } from './TodoItem';
+
+import IconX from '../../images/icon-cross.svg';
+import { removeTodo } from '../../actions/todoAction';
 
 export const TodoItems = () => {
 
-  const { width } = useWindowDimensions();
+  const dispatch = useDispatch();
 
+  const { todos } = useSelector(state => state.todo);
+
+  const { width } = useWindowDimensions();
+  
   return (
     <>
       <div className='todo__items'>
-        <div className="todo__items-contain">
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-          <TodoItem />
-        </div>
+        <ul className="todo__items-contain">
+          { 
+            todos.map( (todo) => (
+              <li key={todo.id} className="todo__item">
+                  <TodoItem {...todo} /> 
+                  <img onClick={ () => dispatch(removeTodo(todo.id)) } src={IconX} alt="icon-cross" />
+              </li>
+            ))
+          }
+        </ul>
         <div className="todo__info">
-          <h3>5 item</h3>
+          <h3>{ todos.length } item</h3>
           {
             width < 425 ? <TodoInfo /> : null
           }

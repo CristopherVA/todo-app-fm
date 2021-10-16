@@ -1,34 +1,33 @@
 import React, { useState } from 'react';
-import IconX from '../../images/icon-cross.svg';
 
-export const TodoItem = () => {
 
+
+export const TodoItem = ({name}) => {
     const [check, setCheck] = useState(false);
 
     const handleChecked = () => {
         setCheck(!check)
     }
 
+
+
     return (
         <>
+            
             <div 
-                className="todo__item"
-                
+                className="todo__desc-contein"
+                onClick={handleChecked}
             >
-                <div 
-                    className="todo__desc-contein"
-                    onClick={handleChecked}
-                >
-                    <input
-                        type="checkbox"
-                        checked={check}
-                    />
+                <input
+                    type="checkbox"
+                    checked={check}
+                />
 
-                    <h2 className={ check ? 'todo__desc line-through' : 'todo__desc'}>Arreglar la nevera</h2>
-                </div>
-
-                <img src={IconX} alt="icon-cross" />
+                <h2 className={ check ? 'todo__desc line-through' : 'todo__desc'}>{name}</h2>
             </div>
+
+           
+                
         </>
     )
 }
