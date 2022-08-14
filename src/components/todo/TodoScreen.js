@@ -1,33 +1,32 @@
-import React from 'react';
-import { useHistory } from 'react-router';
+import React  from 'react';
 import { useForm } from '../../hooks/useForm';
 import iconSun from '../../images/icon-sun.svg';
 import { TodoItems } from './TodoItems';
-
-import { addNewTodo } from '../../actions/todoAction';
-
+import { startLogout } from '../../redux/actions/authAction';
 import { useDispatch } from 'react-redux';
+import { startAddNewTodo } from '../../redux/actions/todoAction';
 
 export const TodoScreen = () => {
 
     const { value, handleInputChange, handleReset } = useForm({
-        todo: ''
+        title: ''
     })
 
     const dispatch = useDispatch();
 
-    const { todo } = value;
+    const { title } = value;
+
+   
 
     const handleSubmit = e => {
         e.preventDefault();
-        dispatch(addNewTodo(todo))
+        if(title === "") return 
+        dispatch(startAddNewTodo(title))
         handleReset()
     }
 
-    const history = useHistory()
-
     const logout = () => {
-        return history.push('/auth/login')
+        dispatch(startLogout())
     }
 
     return (
@@ -42,13 +41,17 @@ export const TodoScreen = () => {
                         <form onSubmit={handleSubmit} className='form__todo'>
                             <input
                                 type="text"
-                                name="todo"
+                                name="title"
                                 placeholder='Create a new Todo...'
                                 className='todo__input'
-                                value={todo}
+                                value={title}
                                 onChange={handleInputChange}
                             />
-                            <button type='submit' className='btn-todo'>Add</button>
+                            <button 
+                                type='submit' 
+                                className='btn-todo' 
+                                
+                            >Add</button>
                         </form>
                     </div>
 

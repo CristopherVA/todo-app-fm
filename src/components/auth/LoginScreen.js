@@ -4,9 +4,8 @@ import * as FaIcons from 'react-icons/fa';
 import { useDispatch } from 'react-redux';
 import validator from 'validator';
 import { useForm } from '../../hooks/useForm';
-
-import { loginWithEmailAndPassoword, loginWithFacebook, loginWithGoogle } from '../../actions/authAction';
-import { setError, removeError } from '../../actions/uiAction';
+import Swal from 'sweetalert2';
+import { loginWithGoogle, startLoginWithEmailAndPassword, loginWithFacebook } from '../../redux/actions/authAction';
 
 export const LoginScreen = () => {
 
@@ -19,7 +18,6 @@ export const LoginScreen = () => {
 
     const { email, password } = value;
 
-
     const handleLoginGoogle = () => {
         dispatch(loginWithGoogle())
     }
@@ -30,23 +28,25 @@ export const LoginScreen = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email,password)
-        if(isFormValid){
-            dispatch(loginWithEmailAndPassoword(email, password))
+        
+        if(isFormValid()){
+            dispatch(startLoginWithEmailAndPassword(email, password))
         }
 
     }
 
     const isFormValid = () => {
+        if(email.trim() === '') return Swal.fire('Error', 'Los campos Email y Password son obligatorios')
+
         if(!validator.isEmail(email)){
-            dispatch(setError('Email is required'))
-            return false;
-        } else if (password.trim().lenght <= 5){
-            dispatch(setError('The password should be major 5 character'))
+            Swal.fire('Error', 'No es un email valido!', 'error')
             return false;
         } 
 
-        dispatch(removeError())
+        if(validator.isEmpty(password) ) {
+            Swal.fire('Error', 'Tienes que llenar los campo de la contraseña!', 'error')
+            return false;
+        }
 
         return true
     }

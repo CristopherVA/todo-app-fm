@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import validator from 'validator';
-import { registeWithEmailAndPassword } from '../../actions/authAction';
-import { removeError, setError } from '../../actions/uiAction';
 import { useForm } from '../../hooks/useForm';
+import { startRegisterWithEmailAndPassword } from '../../redux/actions/authAction';
 
 export const RegisterScreen = () => {
 
@@ -15,34 +15,46 @@ export const RegisterScreen = () => {
         password2: ''
     })
 
-    const { name, email, password, password2} = value;
+    const { name, email, password, password2 } = value;
 
     const dispatch = useDispatch();
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(email,password)
-        if(isFormValid){
-            dispatch(registeWithEmailAndPassword(email, password))
+
+        if(isFormValid()){
+            dispatch(startRegisterWithEmailAndPassword(name, email, password))  
             handleReset()
         }
     }
 
     const isFormValid = () => {
         if(validator.isEmpty(name)){
-            dispatch(setError('Name is required'))
+            Swal.fire('Error', 'El nombre es requerido!', 'error')
             return false
         }
-        else if(!validator.isEmail(email)){
-            dispatch(setError('Email is required'))
+        if(!validator.isEmail(email)){
+            Swal.fire('Error', 'El email es requerido!', 'error')
             return false;
-        } else if (password.trim() !== password2.trim()){
-            dispatch(setError('The password should be same!'))
+        } 
+        
+        if(validator.isEmpty(password)) {
+            Swal.fire('Error', 'Tienes que llenar los campo de la contraseña!', 'error')
+            return false;
+        }
+
+        if (password !== password2){
+            Swal.fire('Error', 'Las contraseñas tiene que tener los mismos valores!', 'error')
             return false;
         } 
 
-        dispatch(removeError())
+        if (password.length < 6){
+            Swal.fire('Error', 'Las contraseñas tiene que tener 6 o mas caracteres!', 'error')
+            return false;
+        } 
 
+        
+        
         return true
     }
 

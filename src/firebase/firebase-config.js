@@ -1,7 +1,9 @@
-import firebase from "firebase/compat/app";
-import 'firebase/compat/auth';
-import 'firebase/compat/firestore';
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+import { getAuth, GoogleAuthProvider, FacebookAuthProvider } from  "firebase/auth";
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyATTMsp_NLPYWvvcBXN7NaSnOC4b5WHn5w",
   authDomain: "todo-app-fm.firebaseapp.com",
@@ -12,14 +14,15 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const googleProvider = new firebase.auth.GoogleAuthProvider();
-const facebookProvider = new firebase.auth.FacebookAuthProvider();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth();
+const db = getFirestore(app);
+const providerGoogle = new GoogleAuthProvider();
+const providerFacebook =  new FacebookAuthProvider();
 
 export {
-    firebase,
-    db,
-    googleProvider,
-    facebookProvider
+  db,
+  auth,
+  providerGoogle,
+  providerFacebook
 }

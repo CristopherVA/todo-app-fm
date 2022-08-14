@@ -3,37 +3,55 @@ import { useSelector, useDispatch } from 'react-redux';
 import useWindowDimensions from '../../hooks/useWindowDimensions';
 import { TodoInfo } from './TodoInfo';
 import { TodoItem } from './TodoItem';
-
 import IconX from '../../images/icon-cross.svg';
-import { removeTodo } from '../../actions/todoAction';
+import { startDeleteTodo } from '../../redux/actions/todoAction';
 
 export const TodoItems = () => {
 
   const dispatch = useDispatch();
 
-  const { todos } = useSelector(state => state.todo);
+  const { todos, typeTodos } = useSelector(state => state.todo);
 
   const { width } = useWindowDimensions();
-  
+
+  const filterTypes = () => {
+    switch (typeTodos) {
+      case "all":
+        return todos.filter(f => f)
+      case "complete":
+        return todos.filter(f => f.status === true)
+      case "active":
+        return todos.filter(f => f.status === false)
+      default:
+        return todos.filter(f => f)
+    }
+  }
+
+
   return (
     <>
       <div className='todo__items'>
         <ul className="todo__items-contain">
-          { 
-            todos.map( (todo) => (
+          {
+            filterTypes().map((todo) => (
               <li key={todo.id} className="todo__item">
-                  <TodoItem {...todo} /> 
-                  <img onClick={ () => dispatch(removeTodo(todo.id)) } src={IconX} alt="icon-cross" />
+                <TodoItem id={todo.id} title={todo.title} status={todo.status} />
+                <img onClick={() => dispatch(startDeleteTodo(todo.id))} src={IconX} alt="icon-cross" />
               </li>
             ))
           }
+
+
         </ul>
         <div className="todo__info">
-          <h3>{ todos.length } item</h3>
+          <h3>{todos.length} item</h3>
           {
             width < 425 ? <TodoInfo /> : null
           }
-          <h3>Clear Completed</h3>
+          <h3 
+
+            style={{ cursor: 'pointer' }}
+          >Clear Completed</h3>
         </div>
       </div>
       {
